@@ -10,7 +10,7 @@ public class Music {
 
     public Integer selection(Integer startIndex, String selection){
         Integer forwards = forwardClicks(startIndex, selection);
-        Integer backwards = backwardsClicks(startIndex, selection);
+        Integer backwards = backwardClicks(startIndex, selection);
 
         if(forwards <= backwards) {
             return forwards;
@@ -21,32 +21,49 @@ public class Music {
         }
     }
 
-    public Integer forwardClicks(Integer startIndex, String selection)
-    {
-        for(int clicks = 0; clicks < playList.length; clicks++)
-        {
+    public Integer forwardClicks(Integer startIndex, String selection) {
+        for (int clicks = 0; clicks < playList.length; clicks++) {
             int currentTrack = (startIndex + clicks) % playList.length;
-            if(playList[currentTrack].equals(selection))
-            {
+            if (playList[currentTrack].equals(selection)) {
                 return clicks;
             }
         }
-        return playList.length;
+        return playList.length + 1;
     }
 
-    public Integer backwardsClicks(Integer startIndex, String selection)
-    {
-        int clicks = 0;
-        for(int i = playList.length - 1; i >= 0; i++)
+    public Integer backwardClicks(Integer startIndex, String selection) {
+        int clickCount = 0;
+
+        for(int i = playList.length - 1; i >= 0; i--)
         {
-            int currentTrack = Math.abs((startIndex - clicks) % playList.length);
+            int currentTrack = (startIndex - clickCount);
+            if(currentTrack < 0)
+            {
+                currentTrack = playList.length - 1 + currentTrack;
+            }
+
             if(playList[currentTrack].equals(selection))
             {
-                return clicks;
+                return clickCount;
             }
-            clicks++;
+
+            clickCount++;
         }
-        return playList.length;
+
+        return playList.length + 1;
+    }
+
+
+    public String[] reversePlaylist()
+    {
+        String[] reversedPlaylist = new String[playList.length];
+
+        for(Integer i = playList.length - 1; i >= 0; i--)
+        {
+            reversedPlaylist[(playList.length - 1) - i] = playList[i];
+        }
+
+        return reversedPlaylist;
     }
 }
 

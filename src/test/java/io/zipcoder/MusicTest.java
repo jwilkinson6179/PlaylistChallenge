@@ -74,17 +74,6 @@ public class MusicTest {
     }
 
     @Test
-    public void backwardsClicksTwo() {
-        String[] playlist = {"north", "east", "west", "south", "left", "right", "up", "down"};
-        Music music = new Music(playlist);
-        Integer startingIndex = 5;
-        String selection = "west";
-        Integer expected = 3;
-        Integer actual = music.backwardsClicks(startingIndex, selection);
-        Assert.assertEquals(expected, actual);
-    }
-
-    @Test
     public void backwardsClicksWrap() {
         String[] playlist = {"mgs", "zelda", "mario", "corax", "crash", "metroid"};
         Music music = new Music(playlist);
@@ -96,14 +85,30 @@ public class MusicTest {
     }
 
     @Test
-    public void backwardsWrapTwo() {
-
-        String[] playlist = {"pine", "elm", "oak", "oak"}; // len = 4, start = 1,
+    public void reverseListTest() {
+        // GIVEN
+        String[] playlist = { "aa", "bb", "cc", "dd", "ee" };
+        String[] expected = { "ee", "dd", "cc", "bb", "aa" };
         Music music = new Music(playlist);
-        Integer startingIndex = 0;
-        String selection = "oak";
-        Integer expected = 1;
-        Integer actual = music.backwardsClicks(startingIndex, selection);
-        Assert.assertEquals(expected, actual);
+
+        // WHEN
+        String[] actual = music.reversePlaylist();
+
+        // THEN
+        Assert.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void reverseListTestRepeatEntries() {
+
+        String[] playlist = {"aaa", "bbb", "ccc", "ccc"};
+        String[] expected = { "ccc", "ccc", "bbb", "aaa" };
+        Music music = new Music(playlist);
+
+        // WHEN
+        String[] actual = music.reversePlaylist();
+
+        // THEN
+        Assert.assertArrayEquals(expected, actual);
     }
 }
